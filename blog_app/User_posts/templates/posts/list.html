@@ -1,0 +1,19 @@
+{% extends 'User_posts/base.html' %}
+
+{% block title %}Blogs{% endblock %}
+
+{%  block content %}
+    <div class="posts">
+        {% for post in posts %}
+            <h2>
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </h2>
+            <p><i>Author:</i> 
+                {{ post.author }} </p>
+            <p>Published: 
+                {{ post.publish }}
+            </p>
+            {{ post.content|truncatewords:30|linebreaks }}
+        {% endfor %}
+    </div>
+{% endblock %}
