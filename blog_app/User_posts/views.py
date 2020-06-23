@@ -1,8 +1,28 @@
 from django.shortcuts import render,get_object_or_404
+
+# Adding the pagination classes
+from django.core.paginator import (Paginator,
+                                    EmptyPage, 
+                                    PageNotAnInteger)
+
 from .models import Post
 
 def post_list(request):
-    posts = Post.published.all()
+
+    object_list = Post.published.all()
+    paginator = Paginator(object_list, 3)# declaring number of post per page
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    
+    context = {'posts':posts,
+                'page':page}
+
     
     context = {'posts':posts}
     return render(request,'posts/list.html',context)

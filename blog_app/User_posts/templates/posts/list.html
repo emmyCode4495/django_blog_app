@@ -16,4 +16,5 @@
             {{ post.content|truncatewords:30|linebreaks }}
         {% endfor %}
     </div>
+    {%  include "User_posts/pagination.html" with page=posts %}
 {% endblock %}
